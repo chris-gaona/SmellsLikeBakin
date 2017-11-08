@@ -15,7 +15,8 @@ public class ListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list, container);
+        // boolean says whether to attach this to the viewgroup...error will be thrown if not used because it will be added twice
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
         return view;
     }
 }
