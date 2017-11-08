@@ -14,14 +14,24 @@ import android.view.ViewGroup;
  */
 
 public class ListFragment extends Fragment {
+
+    public interface OnRecipeSelectedInterface {
+        void onListRecipeSelected(int index);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        // adding a simple listener for the onClick
+        OnRecipeSelectedInterface listener = (OnRecipeSelectedInterface) getActivity();
+
         // boolean says whether to attach this to the viewgroup...error will be thrown if not used because it will be added twice
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.listRecyclerView);
-        ListAdapter listAdapter = new ListAdapter();
+
+        // passes listener into the ListAdapter
+        ListAdapter listAdapter = new ListAdapter(listener);
         recyclerView.setAdapter(listAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         // attach layout manager to recycler view
