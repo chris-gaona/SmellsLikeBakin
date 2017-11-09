@@ -36,6 +36,10 @@ public class MainActivity extends AppCompatActivity implements ListFragment.OnRe
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         // use replace to change to another fragment
         fragmentTransaction.replace(R.id.placeHolder, fragment);
+        // use addToBackStack method to stack fragment on top of each other
+        // so the back button can be used to go to the last fragment on the stack
+        // pass in null because we will only need to go back one transaction at a time
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 }
