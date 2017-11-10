@@ -1,7 +1,7 @@
 package com.chrisgaona.smellslikebakin;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -18,13 +18,13 @@ public class MainActivity extends AppCompatActivity implements ListFragment.OnRe
 
         // this following line makes sure we have access to variables and other stuff we need from our mainactivity
         // uses keys now for fragments LIST_FRAGMENT
-        ListFragment savedFragment = (ListFragment) getFragmentManager().findFragmentByTag(LIST_FRAGMENT);
+        ListFragment savedFragment = (ListFragment) getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT);
 
         // if we didn't have this savedInstanceState check...
         // when we rotate the app it will create a new fragment over the old fragment every time
         if (savedFragment == null) {
             ListFragment fragment = new ListFragment();
-            FragmentManager fragmentManager = getFragmentManager();
+            FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             // uses keys now for fragments LIST_FRAGMENT
             fragmentTransaction.add(R.id.placeHolder, fragment, LIST_FRAGMENT);
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements ListFragment.OnRe
         bundle.putInt(ViewPagerFragment.KEY_RECIPE_INDEX, index);
         fragment.setArguments(bundle);
 
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         // use replace to change to another fragment
         // uses keys now for fragments VIEWPAGER_FRAGMENT
