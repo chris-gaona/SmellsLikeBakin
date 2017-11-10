@@ -13,7 +13,8 @@ import android.widget.LinearLayout;
  * Created by chrisgaona on 11/10/17.
  */
 
-public class CheckBoxesFragment extends Fragment {
+// abstract classes can never be instantiated
+public abstract class CheckBoxesFragment extends Fragment {
 
     private static final String KEY_CHECKED_BOXES = "KEY_CHECKED_BOXES";
     private CheckBox[] mCheckBoxes;
@@ -22,18 +23,12 @@ public class CheckBoxesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         int index = getArguments().getInt(ViewPagerFragment.KEY_RECIPE_INDEX);
-        boolean isIngredients = getArguments().getBoolean(ViewPagerFragment.KEY_IS_INGREDIENTS);
 
         View view = inflater.inflate(R.layout.fragment_checkboxes, container, false);
 
         LinearLayout linearLayout = view.findViewById(R.id.checkboxesLayout);
 
-        String[] contents;
-        if (isIngredients) {
-            contents = Recipes.ingredients[index].split("`");
-        } else {
-            contents = Recipes.directions[index].split("`");
-        }
+        String[] contents = getContents(index);
 
         mCheckBoxes = new CheckBox[contents.length];
 
@@ -47,6 +42,9 @@ public class CheckBoxesFragment extends Fragment {
 
         return view;
     }
+
+    // declares this method as abstract so it can be @Override elsewhere
+    public abstract String[] getContents(int index);
 
     private void setUpCheckBoxes(String[] contents, ViewGroup container, boolean[] checkedBoxes) {
         int i = 0;
