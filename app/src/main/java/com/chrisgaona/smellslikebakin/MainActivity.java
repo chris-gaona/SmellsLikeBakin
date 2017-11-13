@@ -76,6 +76,22 @@ public class MainActivity extends AppCompatActivity implements ListFragment.OnRe
 
     @Override
     public void onGridRecipeSelected(int index) {
+        DualPaneFragment fragment = new DualPaneFragment();
 
+        // creates bundle
+        Bundle bundle = new Bundle();
+        bundle.putInt(ViewPagerFragment.KEY_RECIPE_INDEX, index);
+        fragment.setArguments(bundle);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        // use replace to change to another fragment
+        // uses keys now for fragments VIEWPAGER_FRAGMENT
+        fragmentTransaction.replace(R.id.placeHolder, fragment, VIEWPAGER_FRAGMENT);
+        // use addToBackStack method to stack fragment on top of each other
+        // so the back button can be used to go to the last fragment on the stack
+        // pass in null because we will only need to go back one transaction at a time
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }
