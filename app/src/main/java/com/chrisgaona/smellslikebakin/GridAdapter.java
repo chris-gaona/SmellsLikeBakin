@@ -1,29 +1,29 @@
 package com.chrisgaona.smellslikebakin;
 
 /**
- * Created by chrisgaona on 11/8/17.
+ * Created by chrisgaona on 11/13/17.
  */
 
-public class ListAdapter extends RecyclerAdapter {
+public class GridAdapter extends RecyclerAdapter {
 
     // moved much of the functionality to RecyclerAdapter
-    private final ListFragment.OnRecipeSelectedInterface mListener;
+    private final GridFragment.OnRecipeSelectedInterface mListener;
 
     //unique to ListAdapter is the following:
     // 1. listener
     // 2. layout id
     // 3. what to do when recipe is clicked
-    public ListAdapter(ListFragment.OnRecipeSelectedInterface listener) {
+    public GridAdapter(GridFragment.OnRecipeSelectedInterface listener) {
         mListener = listener;
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.list_item;
+        return R.layout.grid_item;
     }
 
     @Override
     protected void onRecipeSelected(int index) {
-        mListener.onListRecipeSelected(index);
+        mListener.onGridRecipeSelected(index);
     }
 }

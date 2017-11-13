@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements ListFragment.OnRecipeSelectedInterface {
+public class MainActivity extends AppCompatActivity implements ListFragment.OnRecipeSelectedInterface, GridFragment.OnRecipeSelectedInterface {
 
     public static final String LIST_FRAGMENT = "LIST_FRAGMENT";
     public static final String VIEWPAGER_FRAGMENT = "VIEWPAGER_FRAGMENT";
@@ -16,19 +16,40 @@ public class MainActivity extends AppCompatActivity implements ListFragment.OnRe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // this following line makes sure we have access to variables and other stuff we need from our mainactivity
-        // uses keys now for fragments LIST_FRAGMENT
-        ListFragment savedFragment = (ListFragment) getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT);
-
-        // if we didn't have this savedInstanceState check...
-        // when we rotate the app it will create a new fragment over the old fragment every time
-        if (savedFragment == null) {
-            ListFragment fragment = new ListFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        // checking whether a device is a tablet or not
+        // created 2 config files in values folder...one for screens over 600dp & one for under
+        // if screen size is over 600dp for width & height...bool.is_tablet will return true
+        boolean isTablet = getResources().getBoolean(R.bool.is_tablet);
+        if (!isTablet) {
+            // this following line makes sure we have access to variables and other stuff we need from our mainactivity
             // uses keys now for fragments LIST_FRAGMENT
-            fragmentTransaction.add(R.id.placeHolder, fragment, LIST_FRAGMENT);
-            fragmentTransaction.commit();
+            ListFragment savedFragment = (ListFragment) getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT);
+
+            // if we didn't have this savedInstanceState check...
+            // when we rotate the app it will create a new fragment over the old fragment every time
+            if (savedFragment == null) {
+                ListFragment fragment = new ListFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                // uses keys now for fragments LIST_FRAGMENT
+                fragmentTransaction.add(R.id.placeHolder, fragment, LIST_FRAGMENT);
+                fragmentTransaction.commit();
+            }
+        } else {
+            // this following line makes sure we have access to variables and other stuff we need from our mainactivity
+            // uses keys now for fragments LIST_FRAGMENT
+            GridFragment savedFragment = (GridFragment) getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT);
+
+            // if we didn't have this savedInstanceState check...
+            // when we rotate the app it will create a new fragment over the old fragment every time
+            if (savedFragment == null) {
+                GridFragment fragment = new GridFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                // uses keys now for fragments LIST_FRAGMENT
+                fragmentTransaction.add(R.id.placeHolder, fragment, LIST_FRAGMENT);
+                fragmentTransaction.commit();
+            }
         }
     }
 
@@ -51,5 +72,10 @@ public class MainActivity extends AppCompatActivity implements ListFragment.OnRe
         // pass in null because we will only need to go back one transaction at a time
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onGridRecipeSelected(int index) {
+
     }
 }
